@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pendu_IFOSUP", "Pendu_IFOSUP\Pendu_IFOSUP.csproj", "{AF31C2FD-F2E5-457A-BCF6-7F01998132CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF31C2FD-F2E5-457A-BCF6-7F01998132CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF31C2FD-F2E5-457A-BCF6-7F01998132CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF31C2FD-F2E5-457A-BCF6-7F01998132CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF31C2FD-F2E5-457A-BCF6-7F01998132CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8504FE68-9CB6-4A7F-81FE-E101B65F42D7}
+	EndGlobalSection
+EndGlobal
