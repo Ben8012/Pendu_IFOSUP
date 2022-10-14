@@ -1,12 +1,63 @@
 ﻿// creation de la liste des mots a rechercher
+using System;
+
 List<string>listMot = new List<string> { "bonjour", "salut", "developpeur", "coucou", "pourquoi", "comment" };
 string? rejouer = "";
+
+// mode
+
 
 
 while(rejouer == "") {
     Console.Clear();
+
     // initialisation du nombre de vie
-    int nbVie = 10;
+    int nbVie = 0;
+
+    // choisir un mode
+    bool modeOk = false;
+    
+    while (!modeOk)
+    {
+        Console.WriteLine();
+        Console.Write($"Choissisez un mode ( 1 = Facile , 2 = Moyen , 3 = difficile ) : ");
+        if(int.TryParse(Console.ReadLine(),out int mode))
+        {
+            if(mode != 1 && mode != 2 && mode != 3)
+            {
+                modeOk = false;
+            }
+            else
+            {
+                switch (mode)
+                {
+                    case 1:
+                        nbVie = 10;
+                        break;
+                    case 2:
+                        nbVie = 7;
+                        break;
+                    case 3:
+                        nbVie = 5;
+                        break;
+                    default:
+                        // ne s'active jamais car tester au prealable
+                        Console.WriteLine("nombre de vie invalide");
+                        break;
+                }
+                modeOk = true;
+                
+            }
+            
+        }
+        else
+        {
+            Console.WriteLine("valeur de mode incorrect !");
+        }
+        
+    }
+
+    Console.Clear();
     // initialisation du nombre de lettre trouvées
     int nbLetttreTrouve = 0;
 
@@ -39,19 +90,21 @@ while(rejouer == "") {
         Console.Write(" _ ");
     }
     Console.WriteLine();
+    Console.WriteLine();
+    Console.WriteLine($"Nombre de vie : {nbVie}");
+    Console.WriteLine();
 
 
     // Lancement du jeu
     while (nbVie > 0 && nbLetttreTrouve < listMot[index].Length)
     {
         // Encodage utilisateur
-        Console.WriteLine();
+       
         Console.Write("Encodez une lettre : ");
         string? lettre = Console.ReadLine();
 
         // test si le valeur encodée est valide n'est pas un chiffre
-        while (lettre?.Length > 1
-                || lettre != "a"
+        while ( lettre != "a"
                 && lettre != "b"
                 && lettre != "c"
                 && lettre != "d"
@@ -164,9 +217,9 @@ while(rejouer == "") {
                 nbVie--;
                 trouver = false;
                 listMauvaiseLettre.Add(ch);
-                Console.WriteLine();
-                Console.WriteLine($"La lettre n'est pas dans le mot vous perdez une vie ");
-                Console.WriteLine($"Nombre de vie(s) restante(s) : {nbVie}");
+                //Console.WriteLine();
+                //Console.WriteLine($"La lettre n'est pas dans le mot vous perdez une vie ");
+                //Console.WriteLine($"Nombre de vie(s) restante(s) : {nbVie}");
             }
 
 
@@ -174,12 +227,39 @@ while(rejouer == "") {
             // afficher les lettres trouvées
             if (trouver)
             {
+                Console.Clear();
+                // message pour les test a mettre en commentaire en production
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Mot a rechercher est {listMot[index]}");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine($"Le mot a trouver contient {listMot.Count()} lettres toutes en minuscle et pas d'accent !");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine();
                 Console.WriteLine("Lettres trouvées dans le mot");
+                Console.WriteLine();
                 foreach (string item in listLettreTrouver)
                 {
                     Console.Write(item);
                 }
+                Console.WriteLine();
+               
+                if (listMauvaiseLettre.Count > 0)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Lettres jouées qui ne sont pas dans le mot");
+                    Console.WriteLine();
+                    foreach (char item in listMauvaiseLettre)
+                    {
+                        Console.Write($" {item} ");
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine($"Nombre de vie restante : {nbVie}");
                 Console.WriteLine();
             }
             else
@@ -187,12 +267,35 @@ while(rejouer == "") {
                 // affichage des lettres non trouvées
                 if (listMauvaiseLettre.Count > 0)
                 {
+
+                    Console.Clear();
+                    // message pour les test a mettre en commentaire en production
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Mot a rechercher est {listMot[index]}");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine();
+                    Console.WriteLine($"Le mot a trouver contient {listMot.Count()} lettres toutes en minuscle et pas d'accent !");
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+
+                    Console.WriteLine("Lettres trouvées dans le mot");
+                    Console.WriteLine();
+                    foreach (string item in listLettreTrouver)
+                    {
+                        Console.Write(item);
+                    }
+                    Console.WriteLine();
                     Console.WriteLine();
                     Console.WriteLine("Lettres jouées qui ne sont pas dans le mot");
+                    Console.WriteLine();
                     foreach (char item in listMauvaiseLettre)
                     {
                         Console.Write($" {item} ");
                     }
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine($"Nombre de vie restante : {nbVie}");
                     Console.WriteLine();
                 }
             }
@@ -209,18 +312,23 @@ while(rejouer == "") {
     }
     if (nbVie > 0)
     {
+        // en cas de victoire
         Console.WriteLine();
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("vous avez gagné");
+        Console.ForegroundColor = ConsoleColor.White;
     }
     else
     {
+        // en cas de defaite
         Console.WriteLine();
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("vous avez perdu");
         Console.ForegroundColor = ConsoleColor.White;
       
     }
+
+    // condition pour rejouer
     Console.WriteLine();
     Console.Write("Taper ENTER pour rejouer ou sur l'importe quel touche puis ENTER pour arreter :");
     rejouer = Console.ReadLine();
@@ -228,5 +336,11 @@ while(rejouer == "") {
 Console.WriteLine();
 Console.ForegroundColor = ConsoleColor.Green;
 Console.WriteLine("Aurevoir et merci d'avoir jouer :) ");
-Console.ForegroundColor = ConsoleColor.White;
-Console.WriteLine();
+
+
+enum Mode
+{
+    Facile = 1,
+    Moyen = 2,
+    Difficile = 3
+}
