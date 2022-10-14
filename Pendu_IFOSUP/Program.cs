@@ -1,165 +1,232 @@
 ﻿// creation de la liste des mots a rechercher
 List<string>listMot = new List<string> { "bonjour", "salut", "developpeur", "coucou", "pourquoi", "comment" };
-
-// initialisation du nombre de vie
-int nbVie = 10;
-
-// creation d'un index pour chercher un mot aleatoirement dans la liste
-Random rand = new Random();
-int index = rand.Next(0, listMot.Count());
+string? rejouer = "";
 
 
-// creation du stock des lettre trouvée
-string[] listLettreTrouver = new string[listMot[index].Count()];
+while(rejouer == "") {
+    Console.Clear();
+    // initialisation du nombre de vie
+    int nbVie = 10;
+    // initialisation du nombre de lettre trouvées
+    int nbLetttreTrouve = 0;
 
-// creatio d'un stockage pour le mauvaise mettre
-List<char>listMauvaiseLettre = new List<char>();
+    // creation d'un index pour chercher un mot aleatoirement dans la liste
+    Random rand = new Random();
+    int index = rand.Next(0, listMot.Count());
 
-//Console.WriteLine($"index du mot a rechercher {index}");
-Console.WriteLine($"Mot a rechercher {listMot[index]}");
-Console.WriteLine();
 
-// valeur du nombre de lettre trouvées
-int nbLetttreTrouve = 0;
+    // creation du tableau des lettres trouvée
+    string[] listLettreTrouver = new string[listMot[index].Count()];
 
-// affichage du nombre de caracter que contient le mot a trouver
-foreach (char item in listMot[index])
-{
-    Console.Write(" - ");
-}
-Console.WriteLine();
+    // creation d'une liste pour les mauvaises lettres
+    List<char> listMauvaiseLettre = new List<char>();
 
-while (nbVie > 0 && nbLetttreTrouve < listMot[index].Length)
-{
-    // Encodage utilisateur
+    // message pour les test a mettre en commentaire en production
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine($"Mot a rechercher est {listMot[index]}");
+    Console.ForegroundColor = ConsoleColor.Blue;
     Console.WriteLine();
-    Console.Write("Encodez une lettre : ");
-    string? lettre = Console.ReadLine();
-
-
-    //test si la lettre a deja été joué
-    //bool dejaJouer = false;
-    //if (nbLetttreTrouve > 0 || listMauvaiseLettre.Count() > 0)
-    //{
-    //    while (!dejaJouer)
-    //    {
-    //        if (char.TryParse(lettre, out char le))
-    //        {
-                
-    //            foreach (char item in listMauvaiseLettre)
-    //            {
-    //                if (item == le)
-    //                {
-    //                    dejaJouer = true;
-    //                }
-    //            }
-
-    //        }
-    //        foreach (string item in listLettreTrouver)
-    //        {
-    //            if (item == lettre)
-    //            {
-    //                dejaJouer = true;
-    //            }
-    //        }
-    //        if (dejaJouer)
-    //        {
-    //            Console.Write("cette lettre a deja été joué encodez une nouvelle lettre : ");
-    //            lettre = Console.ReadLine();
-    //            dejaJouer = false;
-
-    //        }
-    //    }
-    //}
+    Console.WriteLine($"Le mot a trouver contient {listMot.Count()} lettres toutes en minuscle et pas d'accent !");
+    Console.WriteLine();
+    Console.ForegroundColor = ConsoleColor.White;
 
 
 
-    // test si le valeur encordée est valide
-    while (lettre?.Length > 1
-            || lettre == "0"
-            || lettre == "1"
-            || lettre == "2"
-            || lettre == "3"
-            || lettre == "4"
-            || lettre == "5"
-            || lettre == "6"
-            || lettre == "7"
-            || lettre == "8"
-            || lettre == "9"
-            )
+    // affichage du nombre de caracter que contient le mot a trouver
+    Console.Write("Mot a trouver : ");
+    foreach (char item in listMot[index])
     {
-        Console.Write("Encodez une seule lettre et pas un nombre : ");
-        lettre = Console.ReadLine();
-  
+        Console.Write(" _ ");
     }
+    Console.WriteLine();
 
 
-
-    if (char.TryParse(lettre, out char ch))
+    // Lancement du jeu
+    while (nbVie > 0 && nbLetttreTrouve < listMot[index].Length)
     {
+        // Encodage utilisateur
+        Console.WriteLine();
+        Console.Write("Encodez une lettre : ");
+        string? lettre = Console.ReadLine();
 
-        bool trouver = false;
-        int i = 0;
-        foreach (char l in listMot[index])
+        // test si le valeur encodée est valide n'est pas un chiffre
+        while (lettre?.Length > 1
+                || lettre != "a"
+                && lettre != "b"
+                && lettre != "c"
+                && lettre != "d"
+                && lettre != "e"
+                && lettre != "f"
+                && lettre != "g"
+                && lettre != "h"
+                && lettre != "i"
+                && lettre != "j"
+                && lettre != "k"
+                && lettre != "l"
+                && lettre != "m"
+                && lettre != "n"
+                && lettre != "o"
+                && lettre != "p"
+                && lettre != "q"
+                && lettre != "r"
+                && lettre != "s"
+                && lettre != "t"
+                && lettre != "u"
+                && lettre != "v"
+                && lettre != "w"
+                && lettre != "x"
+                && lettre != "y"
+                && lettre != "z"
+                )
         {
-            if ((char)ch == l)
+            Console.Write("Encodez une seule lettre, pas de chiffre, pas de majuscule et pas d'accents : ");
+            lettre = Console.ReadLine();
+
+        }
+
+        
+        //test si la lettre a deja été joué
+        bool dejaJouer = false;
+        while (!dejaJouer)
+        {
+
+            if (listLettreTrouver.Length > 0)
             {
-                //Console.Write($" {l} ");
-                listLettreTrouver[i]=" "+l+" ";
-                nbLetttreTrouve++;
-                trouver = true;
+
+                foreach (string item in listLettreTrouver)
+                {
+                    if (item == " " + lettre + " ")
+                    {
+                        dejaJouer = true;
+                    }
+                }
+            }
+
+            if (listMauvaiseLettre.Count() > 0)
+            {
+
+                if (char.TryParse(lettre, out char le))
+                {
+
+                    foreach (char item in listMauvaiseLettre)
+                    {
+                        if (item == le)
+                        {
+                            dejaJouer = true;
+                        }
+                    }
+
+                }
+
+            }
+
+            if (dejaJouer)
+            {
+                Console.Write("Cette lettre a deja été joué encodez une nouvelle lettre : ");
+                lettre = Console.ReadLine();
+                dejaJouer = false;
+
+
             }
             else
             {
-                if (listLettreTrouver[i] == null)
-                    listLettreTrouver[i] = (" - ");
-                //Console.Write(" - ");
+                dejaJouer = true;
             }
-
-            i++;
         }
-        if (!trouver)
+
+
+        // verification et ajout si la lettre est dans le mot a trouver 
+        if (char.TryParse(lettre, out char ch))
         {
-            nbVie--;
-            trouver=false;
-            listMauvaiseLettre.Add(ch);
-        }
-        Console.WriteLine($"nombre de vie restante : {nbVie}");
 
-
-        // afficcher les lettres trouvée
-        Console.WriteLine("Lettres trouvées dans le mot");
-        foreach (string item in listLettreTrouver)
-        {
-            Console.Write(item);
-        }
-        Console.WriteLine();
-
-        // affichage des lettre non trouvées
-
-        if(listMauvaiseLettre.Count > 0)
-        {
-            Console.WriteLine("Lettres jouées qui ne sont pas dans le mot");
-            foreach (char item in listMauvaiseLettre)
+            bool trouver = false;
+            int i = 0;
+            foreach (char l in listMot[index])
             {
-                Console.Write($" {item} ");
+                if (ch == l)
+                {
+                    //Console.Write($" {l} ");
+                    listLettreTrouver[i] = " " + l + " ";
+                    nbLetttreTrouve++;
+                    trouver = true;
+                }
+                else
+                {
+                    if (listLettreTrouver[i] == null)
+                        listLettreTrouver[i] = (" _ ");
+                    //Console.Write(" - ");
+                }
+
+                i++;
             }
-            Console.WriteLine();
+            if (!trouver)
+            {
+                nbVie--;
+                trouver = false;
+                listMauvaiseLettre.Add(ch);
+                Console.WriteLine();
+                Console.WriteLine($"La lettre n'est pas dans le mot vous perdez une vie ");
+                Console.WriteLine($"Nombre de vie(s) restante(s) : {nbVie}");
+            }
+
+
+
+            // afficher les lettres trouvées
+            if (trouver)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Lettres trouvées dans le mot");
+                foreach (string item in listLettreTrouver)
+                {
+                    Console.Write(item);
+                }
+                Console.WriteLine();
+            }
+            else
+            {
+                // affichage des lettres non trouvées
+                if (listMauvaiseLettre.Count > 0)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Lettres jouées qui ne sont pas dans le mot");
+                    foreach (char item in listMauvaiseLettre)
+                    {
+                        Console.Write($" {item} ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+
         }
-       
+        else
+        {
+            // message d'erreur qui ne devrait plus s'afficher vu que tout a été géré
+            Console.WriteLine();
+            Console.WriteLine("la conversion string vers char n'as pas fonctionné !");
+        };
+
+    }
+    if (nbVie > 0)
+    {
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("vous avez gagné");
     }
     else
     {
-        Console.WriteLine("la conversion string vers char n'as pas fonctionné !");
-    };
-
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("vous avez perdu");
+        Console.ForegroundColor = ConsoleColor.White;
+      
+    }
+    Console.WriteLine();
+    Console.Write("Taper ENTER pour rejouer ou sur l'importe quel touche puis ENTER pour arreter :");
+    rejouer = Console.ReadLine();
 }
-if(nbVie > 0)
-{
-    Console.WriteLine("vous avez gagné");
-}
-else
-{
-    Console.WriteLine("vous avez perdu");
-}
-
+Console.WriteLine();
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine("Aurevoir et merci d'avoir jouer :) ");
+Console.ForegroundColor = ConsoleColor.White;
+Console.WriteLine();
